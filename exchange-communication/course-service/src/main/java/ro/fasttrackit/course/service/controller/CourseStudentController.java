@@ -2,7 +2,8 @@ package ro.fasttrackit.course.service.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ro.fasttrackit.course.service.model.entity.CourseStudent;
+import ro.fasttrackit.course.service.model.domain.request.CourseStudentRequestDto;
+import ro.fasttrackit.course.service.model.domain.response.CourseStudentResponseDto;
 import ro.fasttrackit.course.service.service.CourseStudentService;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public class CourseStudentController {
     }
 
     @PostMapping(path = "{courseId}/students")
-    CourseStudent enrollStudentToCourse(@PathVariable String courseId, @RequestBody CourseStudent courseStudent) {
-        return courseStudentService.enrollStudentToCourse(courseId, courseStudent);
+    CourseStudentResponseDto enrollStudentToCourse(@PathVariable String courseId, @RequestBody CourseStudentRequestDto request) {
+        return courseStudentService.enrollStudentToCourse(courseId, request);
     }
 }

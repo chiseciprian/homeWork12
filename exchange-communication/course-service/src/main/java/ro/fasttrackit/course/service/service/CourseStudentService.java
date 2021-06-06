@@ -2,8 +2,11 @@ package ro.fasttrackit.course.service.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import ro.fasttrackit.course.service.model.domain.request.CourseStudentRequestDto;
+import ro.fasttrackit.course.service.model.domain.response.CourseStudentResponseDto;
 import ro.fasttrackit.course.service.model.entity.CourseStudent;
 import ro.fasttrackit.course.service.repository.CourseStudentRepository;
+import ro.fasttrackit.course.service.service.mapper.CourseStudentMapper;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -12,10 +15,11 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CourseStudentService {
     private final CourseStudentRepository courseStudentRepository;
+    private final CourseStudentMapper courseStudentMapper;
 
-    public CourseStudent enrollStudentToCourse(String courseId, CourseStudent courseStudent) {
-        courseStudent.setCourseId(courseId);
-        return courseStudentRepository.save(courseStudent);
+    public CourseStudentResponseDto enrollStudentToCourse(String courseId, CourseStudentRequestDto request) {
+        CourseStudent courseStudent = courseStudentRepository.save(courseStudentMapper.mapRequestDtoToEntity(courseId, request));
+        return courseStudentMapper.mapEntityToResponseDto(courseStudent);
     }
 
     public List<String> studentsByCourse(String courseId) {
